@@ -1,0 +1,31 @@
+#!/usr/bin/perl -w
+
+use strict;
+
+sub check{
+   my $num = shift;
+   my @digits = split "", $num;
+   return &sum(@digits) == $num;   
+}
+
+sub sum{
+   my @digits = @_;
+#   print "checking @digits\t";
+   my $sum = 0;
+   foreach (@digits){
+      $sum += $_**5;
+   }
+#   print "sum = $sum\n";
+   return $sum;
+}
+
+my $sum = 0;
+my $last = 0;
+foreach (2..200000){
+   if (&check($_)){
+      $sum += $_;
+      $last = $_;
+   }
+}
+print "$sum\n";
+print "last = $last\n";

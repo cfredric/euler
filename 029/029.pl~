@@ -1,0 +1,48 @@
+#!/usr/bin/perl -w
+use strict;
+
+my %list;
+foreach my $a (2..2000){
+   foreach my $b (2..2000){
+      $list{&fac_exp($a,$b)} = 1;
+   }
+}
+
+print scalar(keys %list)."\n";
+
+
+
+sub fac{ #factorize a number into p1^e1 * p2^e2 * ... * pk^ek
+   my ($n) = @_;
+   my @facts;
+   if($n % 2 == 0){  #check for powers of 2 first
+      my $exp = 0;
+      while($n % 2 == 0){
+         $exp++;
+         $n = $n / 2;
+      }
+      push @facts, "2^$exp";
+   }
+   my $i = 3;
+   while($n > 1){ #now we only need to look for odd primes
+      my $exp = 0;
+      while($n % $i == 0){ #found a divisor
+         $exp++;
+         $n = $n / $i;
+      }
+      push @facts, "$i^$exp" if($exp != 0);
+      $i+=2;
+   }
+   return @facts;
+}
+
+sub fac_exp{   #take a given factorization, and multiply the multiplicities of each factor by a certain factor
+   my ($n, $power) = @_;
+   my @facts = &fac($n);
+   my @mfacts;
+   for my $f (@facts){
+      my ($p, $e) = $f =~ m/^([0-9]+)\^([0-9]+)$/;
+      push @mfacts, "$p^".$e*$power;
+   }
+   return join " ", @mfacts;
+}

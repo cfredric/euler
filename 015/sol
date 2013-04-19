@@ -1,0 +1,8 @@
+Any route through the 20x20 grid has to take 20 steps rightward, and 20 steps downward. That makes a total of 40 steps, equally split between right and down.
+Thus, the solution is the number of unique 40-character bitstrings, where 1s represent Down, and 0s represent Right (or vice versa).
+
+This number can be found using permutations. P(40,40) = 40!/(40-40)! = 40!, except that I don't have 40 unique items. I have 2 items, and I have 20 of each. Thus, I should divide by 20!, twice. Answer = 40!/(20!*20!) = 137846528820.
+
+
+
+Note: When constructing permutations of items, where some of the items are duplicates, divide the "normal" answer by factorial of the number of copies of an item, for each item. This is because if you consider a string of items where three of them are the same, it doesn't matter which one is which. Consider JUST those three items, without disturbing the rest of the list. There are P(3,3) = 3!/(3-3)! = 3! arrangements for those items, which are all the same. Thus, divide by the number of identical arrangements.
