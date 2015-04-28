@@ -1,6 +1,4 @@
 #!/usr/bin/perl -w
-
-
 sub isPrime($){
     my $n = shift;
     return 0 if ($n % 2 == 0 and $n != 2);
@@ -11,34 +9,46 @@ sub isPrime($){
     }
     return 1;
 }
-
+sub getRotations($){
+    my $num = shift;
+    my $l = length($num);
+    my @list;
+    for (1..$l){
+        push(@list, $num);
+        $num = rotate($num);
+    }
+    return @list;
+}
 sub rotate($){
     my $num = shift;
     my ($h, $t) = $num =~ m/^(\d)(\d*)$/;
     return $t . $h;
 }
-
-sub isCircularPrime($){
-    my $num = shift;
+sub isCircularPrime($;$){
+    my $num = $_[0];
+    my $hr = $_[1];
+    return $$hr{$num} if(defined($$hr{$num}));
     my $l = length($num);
     my $circularPrime = 1;
-    for (1..$l){
-        $num = rotate($num);
-        unless(isPrime($num)){
+    my @list = getRotations($num);
+    for my $n (@list){
+        if(!isPrime($n)){
             $circularPrime = 0;
+            last;
         }
     }
-    
     if ($circularPrime){
-        print "Found one! " . $num . "\n";
-        return 1;
+        print "Found one! " . join(', ', @list) . "\n";
     }
-    return 0;
+    for my $n (@list){
+        $$hr{$n} = $circularPrime; 
+    }
+    return $circularPrime;
 }
-
 my $sum = 0;
+my %hash;
 my $u = 1000000;
 for(2..$u){
-    $sum += isCircularPrime($_);
+    $sum += isCircularPrime($_, \%hash);
 }
 print "Found $sum circular primes below $u.\n";
