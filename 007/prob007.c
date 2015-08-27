@@ -2,7 +2,6 @@
 #include<math.h>  // use gcc -o ......  ....  -lm for this to work
 
 void main(){
-	
 	int i=3;
 	int primeCount = 1;
 	while(primeCount <10001){
@@ -22,6 +21,4 @@ void main(){
 	}
 	i--;
 	printf("prime #%d: %d\n",primeCount,i);
-	
-	
 }
