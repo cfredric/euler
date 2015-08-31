@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 
 #define TRUE 1
@@ -13,22 +14,21 @@ int abund(int n);
 int table[MAX];
 
 int main(int argc, char * argv[]){
-	
-	int limit = (int) atoi(argv[1]);
+	int limit;
+    if(argc > 1)
+       limit = (int) atoi(argv[1]);
+    else
+        limit = MAX;
 	long sum = 0;
 	int i = 0;
-	
+
 	//initialize table
 	for(i = 0;i<=limit;i++){
 		table[i] = FALSE;
 	}
-	
-	
+
 	for(i=0;i < limit;i++){
 		if(summer(i) == FALSE){
-/*			if(DEBUG == TRUE){
-				printf("%d: FALSE\n",i);
-			}*/
 			sum += i;
 		}
 	}
@@ -37,9 +37,8 @@ int main(int argc, char * argv[]){
 
 //return true if n is an abundant number
 int abund(int n){
-	
 	if(n<12) return FALSE;
-	
+
 	long divsum = 1;
 	int i;
 	if(table[n] == TRUE){
@@ -53,20 +52,6 @@ int abund(int n){
 			}
 		}
 	}
-	
-	/*
-	if(DEBUG == TRUE && divsum > n){
-		printf("\tabundant: %d\n\t%d == 1 ",n,n);
-		int k;
-		for(k = 2;k<=sqrt(n);k++){
-			if(n%k == 0){
-				printf("+ %d + %d ",k,n/k);
-			}
-		}
-		printf("\n");
-	}
-	*/
-	
 	return table[n] = (divsum > n?TRUE:FALSE);
 }
 
@@ -77,9 +62,6 @@ int summer(int n){
 	for(i = 2;i <= n/2;i++){
 		j = n-i;
 		if( (abund(i) == TRUE) && (abund(j) == TRUE)){
-/*			if(DEBUG == TRUE){
-				printf("%d = %d + %d\n",n,i,j);
-			} */
 			return TRUE;
 		}
 	}

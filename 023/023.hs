@@ -7,7 +7,7 @@ isSumOf2Abundants :: Int -> Bool
 isSumOf2Abundants n = sumFinder n $ takeWhile (<n) abundants
     where sumFinder :: Int -> [Int] -> Bool
           sumFinder _ [] = False
-          sumFinder n (a:as) = if isAbundant (n-a) then True else sumFinder n as
+          sumFinder n (a:as) = if (n-a) `elem` abundants then True else sumFinder n as
 
 abundants = filter isAbundant [1..limit]
 
