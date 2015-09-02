@@ -2,7 +2,7 @@ import Data.Char
 
 prob038 = maximum $ map read (map listToString productsList) :: Int
     where
-    productsList = filter isPanDigital [buildConcatenatedProduct k 9 | k <- [1..9999]]
+    productsList = [productList | k <- [1..9999], let productList = buildConcatenatedProduct k 9, isPanDigital productList]
 
 buildConcatenatedProduct :: Int -> Int -> [Int]
 buildConcatenatedProduct k lengthLimit = concatHelper k lengthLimit [] [1..]
