@@ -14,7 +14,6 @@ buildConcatenatedProduct k lengthLimit = concatHelper k lengthLimit [] [1..]
         | otherwise = concatHelper k lengthLimit (acc ++ (map digitToInt $ show $ k*n)) ns
 
 listToString :: [Int] -> [Char]
-listToString [] = "0"
 listToString ns = map intToDigit ns
 
 isPanDigital :: [Int] -> Bool
