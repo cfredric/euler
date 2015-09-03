@@ -1,24 +1,15 @@
-import Data.Char
+import Data.List (sort)
 
-prob038 = maximum $ map read (map listToString productsList) :: Int
-    where
-    productsList = [productList | k <- [1..9999], let productList = buildConcatenatedProduct k 9, isPanDigital productList]
+prob038 = maximum [product | k <- [1..9999], let product = buildConcatenatedProduct k 9, isPanDigital product]
 
-buildConcatenatedProduct :: Int -> Int -> [Int]
+buildConcatenatedProduct :: Int -> Int -> String
 buildConcatenatedProduct k lengthLimit = concatHelper k lengthLimit [] [1..]
     where
-    concatHelper :: Int -> Int -> [Int] -> [Int] -> [Int]
+    concatHelper :: Int -> Int -> String -> [Int] -> String
     concatHelper k lengthLimit acc (n:ns)
         | length acc > lengthLimit = []
         | length acc == lengthLimit = if n == 2 then [] else acc
-        | otherwise = concatHelper k lengthLimit (acc ++ (map digitToInt $ show $ k*n)) ns
+        | otherwise = concatHelper k lengthLimit (acc ++ (show $ k*n)) ns
 
-listToString :: [Int] -> [Char]
-listToString ns = map intToDigit ns
-
-isPanDigital :: [Int] -> Bool
-isPanDigital list = length list == 9 && and (listApply (map elem [1..9]) list)
-    where
-    listApply :: [[a] -> b] -> [a] -> [b]
-    listApply [] _ = []
-    listApply (f:fs) list = (f list) : listApply fs list
+isPanDigital :: String -> Bool
+isPanDigital str = sort str == "123456789"
