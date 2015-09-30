@@ -3,7 +3,7 @@ import Data.Numbers.Primes (isPrime, primes)
 
 main = print prob050
 
-prob050 = findLongestPrimeSequenceUnderLimit 1000000 10000
+prob050 = findLongestPrimeSequenceUnderLimit 1000000 2
 
 findLongestPrimeSequenceUnderLimit :: Int -> Int -> (Int, Int)
 findLongestPrimeSequenceUnderLimit upperLim maxStart = maximum (tuples `using` parList rdeepseq)
